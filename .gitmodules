@@ -9,7 +9,7 @@
 	url = https://github.com/inedostoev/MIPTakinator
 [submodule "Ilab/diff"]
 	path = Ilab/diff
-	url = https://github.com/inedostoev/diff.git
+	url = https://github.com/inedostoev/diff
 [submodule "Ilab/Compilator"]
 	path = Ilab/Compilator
 	url = https://github.com/inedostoev/Compilator.git
