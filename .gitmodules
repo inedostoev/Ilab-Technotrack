@@ -1,6 +1,3 @@
-[submodule "Ilab1/Stack_cpp"]
-	path = Ilab1/Stack_cpp
-	url = https://github.com/inedostoev/Stack_cpp.git
 [submodule "Ilab/MIPTakinator"]
 	path = Ilab/MIPTakinator
 	url = https://github.com/inedostoev/MIPTakinator
@@ -13,6 +10,3 @@
 [submodule "Ilab/CPU_cpp"]
 	path = Ilab/CPU_cpp
 	url = https://github.com/inedostoev/CPU_cpp
-[submodule "Stack_cpp"]
-	path = Stack_cpp
-	url = https://github.com/inedostoev/Stack_cpp
