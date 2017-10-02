@@ -12,7 +12,7 @@
 	url = https://github.com/inedostoev/diff
 [submodule "Ilab/Compilator"]
 	path = Ilab/Compilator
-	url = https://github.com/inedostoev/Compilator.git
+	url = https://github.com/inedostoev/Compilator
 [submodule "Ilab/CPU_cpp"]
 	path = Ilab/CPU_cpp
 	url = https://github.com/inedostoev/CPU_cpp
