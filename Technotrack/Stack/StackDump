@@ -1,0 +1,57 @@
+Stack 's' (Ok)
+{
+	capacity_ = 13
+	size_ = 7
+	data_[0x559a7b8cdb20]
+	* [0] 10
+	* [1] 11
+	* [2] 12
+	* [3] 13
+	* [4] 14
+	* [5] 15
+	* [6] 16
+	  [7] -666  POISON!
+	  [8] -666  POISON!
+	  [9] -666  POISON!
+	  [10] -666  POISON!
+	  [11] -666  POISON!
+	  [12] -666  POISON!
+	}
+Stack 's' (Ok)
+{
+	capacity_ = 13
+	size_ = 6
+	data_[0x559a7b8cdb20]
+	* [0] 10
+	* [1] 11
+	* [2] 12
+	* [3] 13
+	* [4] 14
+	* [5] 15
+	  [6] -666  POISON!
+	  [7] -666  POISON!
+	  [8] -666  POISON!
+	  [9] -666  POISON!
+	  [10] -666  POISON!
+	  [11] -666  POISON!
+	  [12] -666  POISON!
+	}
+Stack 's' (Ok)
+{
+	capacity_ = 13
+	size_ = 0
+	data_[0x559a7b8cdb20]
+	  [0] -666  POISON!
+	  [1] -666  POISON!
+	  [2] -666  POISON!
+	  [3] -666  POISON!
+	  [4] -666  POISON!
+	  [5] -666  POISON!
+	  [6] -666  POISON!
+	  [7] -666  POISON!
+	  [8] -666  POISON!
+	  [9] -666  POISON!
+	  [10] -666  POISON!
+	  [11] -666  POISON!
+	  [12] -666  POISON!
+	}
