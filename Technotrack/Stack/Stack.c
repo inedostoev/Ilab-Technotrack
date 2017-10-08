@@ -110,7 +110,7 @@ void StackDump(const Stack *stack, FILE* stream, char Stack_name[MAX_LENGTH]) {
 	    fprintf(stream, "\tdata_[%p]\n\t{\n", stack->data_);
     } 
     else {
-        fprintf(stream, "\tdata_[%p]\n",
+        fprintf(stream, "\tdata_[%p]\n"
 	                    "\t{\n", stack->data_);
 	    for (size_t i = 0; i < stack->size_; i++) {
 		    fprintf(stream, "\t* [%zu] %lg\n", i, stack->data_[i]);
@@ -119,8 +119,8 @@ void StackDump(const Stack *stack, FILE* stream, char Stack_name[MAX_LENGTH]) {
 			    fprintf(stream, "\t  [%zu] %lg  POISON!\n", i, stack->data_[i]);
 	    }
     }
-	fprintf(stream, "\t}\n",
-                    "}\n");
+	fprintf(stream, "\t}\n" 
+                     "}\n");
 }
 
 size_t IsStackEmpty(const Stack *stack) {
