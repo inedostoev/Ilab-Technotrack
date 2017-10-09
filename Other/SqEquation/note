@@ -1,0 +1,3 @@
+gcc SqEquation.c -o SqEquation -lm
+
+- lm to link <math.h>
