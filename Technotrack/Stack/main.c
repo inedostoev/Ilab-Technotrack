@@ -6,8 +6,7 @@
 
 #define DUMP(file,Stack_name);							\
 {														\
-	assert(strlen(#Stack_name) < MAX_LENGTH);			\
-	StackDump(Stack_name, file, #Stack_name);    \
+	StackDump(Stack_name, file, #Stack_name);           \
 }
 
 int main() {

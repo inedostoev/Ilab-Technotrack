@@ -15,9 +15,11 @@
 
 struct Stack *StackCtor(size_t cap) {
     Stack *stack = (Stack*)calloc(1, sizeof(Stack));
-    stack->data_ = (StackData_t*)calloc(cap, sizeof(StackData_t));
+    stack->leftCanary_ = leftCanary;
     stack->capacity_ = cap;
     stack->size_ = 0;
+    stack->data_ = (StackData_t*)calloc(cap, sizeof(StackData_t));
+    stack->rightCanary_ = rightCanary;
     ASSERT_OK(stack);
     for(size_t i = 0; i < cap; i++) {
         stack->data_[i] = -666;
@@ -25,29 +27,32 @@ struct Stack *StackCtor(size_t cap) {
     return stack;
 }
 
-void StackDtor(Stack *stack){
+int StackDtor(Stack *stack){
     ASSERT_OK(stack);
     for(size_t i = 0; i < stack->capacity_; i++) {
         stack->data_[i] = -666;
     }
     free(stack->data_);
     stack->data_ = NULL;
+    stack->leftCanary_ = 666;
+    stack->rightCanary_ = 666;
     stack->capacity_ = 666;
     stack->size_ = 666;
     free(stack);
-    stack = NULL;
+    return 0;
 }
 
-void StackPush(Stack *stack, StackData_t value) {
+int StackPush(Stack *stack, StackData_t value) {
     ASSERT_OK(stack);
     if(stack->size_ > (stack->capacity_ - 1)) {
             StackReallocMemory(stack);
     }
     stack->data_[(stack->size_)++] = value;
     ASSERT_OK(stack);
+    return 0;
 }
 
-void StackReallocMemory(Stack *stack) {
+int StackReallocMemory(Stack *stack) {
     ASSERT_OK(stack);
     stack->capacity_ += 10;
     stack->data_ = 
@@ -57,6 +62,7 @@ void StackReallocMemory(Stack *stack) {
         stack->data_[i] = -666;
     }
     ASSERT_OK(stack);
+    return 0;
 }
 
 StackData_t StackPop(Stack *stack){
@@ -87,14 +93,22 @@ StackErrors StackOk(const Stack *stack) {
     else if(stack->size_ < 0 || stack->size_ > stack->capacity_) {
         return STACK_WRONG_COUNT;
     }
+    else if(stack->leftCanary_ != leftCanary || 
+            stack->rightCanary_ != rightCanary) {
+        return STACK_SPOILED;
+    }
     else return STACK_OK;
 }
 
-void StackDump(const Stack *stack, FILE* stream, char Stack_name[MAX_LENGTH]) {
+StackErrors StackDump(const Stack *stack, FILE* stream, char* Stack_name) {
     StackErrors Error = StackOk(stack);
     if(Error == STACK_NULL_PTR) {
         fprintf(stream, "Stack pointer = NULL\n");
-        return;
+        return Error;
+    }
+    if(Error == STACK_SPOILED) {
+        fprintf(stream, "Stack was spoiled\n");
+        return Error;
     }
     fprintf(stream, "Stack '%s' ", Stack_name);
 	fprintf(stream, !StackOk(stack) ? "(Ok)\n" : "(NotOk)\n");
@@ -102,7 +116,7 @@ void StackDump(const Stack *stack, FILE* stream, char Stack_name[MAX_LENGTH]) {
 	if(Error == STACK_WRONG_COUNT || Error == STACK_WRONG_CAPACITY) {
         fprintf(stream, "\tcapacity_ = %zu\n", stack->capacity_); 
         fprintf(stream, "\tsize_ = %zu\n", stack->size_);
-        return;
+        return Error;
     }
     fprintf(stream, "\tcapacity_ = %zu\n", stack->capacity_); 
     fprintf(stream, "\tsize_ = %zu\n", stack->size_);
@@ -120,7 +134,8 @@ void StackDump(const Stack *stack, FILE* stream, char Stack_name[MAX_LENGTH]) {
 	    }
     }
 	fprintf(stream, "\t}\n" 
-                     "}\n");
+                    "}\n");
+    return Error;
 }
 
 size_t IsStackEmpty(const Stack *stack) {
@@ -141,11 +156,12 @@ size_t GetStackCapacity(const Stack *stack) {
     return stack->capacity_;
 }
 
-void StackClear(Stack *stack) {
+int StackClear(Stack *stack) {
     ASSERT_OK(stack);
     for(size_t i = 0; i < stack->size_; i++) {
         stack->data_[i] = -666;
     }
     stack->size_ = 0;
     ASSERT_OK(stack);
+    return 0;
 }
