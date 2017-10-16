@@ -110,10 +110,10 @@ StackErrors StackDump(const Stack *stack, FILE* stream, char* Stack_name) {
         fprintf(stream, "Stack was spoiled\n");
         return Error;
     }
-    fprintf(stream, "Stack '%s' ", Stack_name);
-	fprintf(stream, !StackOk(stack) ? "(Ok)\n" : "(NotOk)\n");
+    fprintf(stream, "Stack '%s' ", Stack_name); 
+    fprintf(stream, !StackOk(stack) ? "(Ok)\n" : "(NotOk)\n");
     fprintf(stream, "{\n");
-	if(Error == STACK_WRONG_COUNT || Error == STACK_WRONG_CAPACITY) {
+    if(Error == STACK_WRONG_COUNT || Error == STACK_WRONG_CAPACITY) {
         fprintf(stream, "\tcapacity_ = %zu\n", stack->capacity_); 
         fprintf(stream, "\tsize_ = %zu\n", stack->size_);
         return Error;
@@ -121,20 +121,20 @@ StackErrors StackDump(const Stack *stack, FILE* stream, char* Stack_name) {
     fprintf(stream, "\tcapacity_ = %zu\n", stack->capacity_); 
     fprintf(stream, "\tsize_ = %zu\n", stack->size_);
     if(Error == STACK_NULL_DATA_PTR) {
-	    fprintf(stream, "\tdata_[%p]\n\t{\n", stack->data_);
+        fprintf(stream, "\tdata_[%p]\n\t{\n", stack->data_);
     } 
     else {
         fprintf(stream, "\tdata_[%p]\n"
-	                    "\t{\n", stack->data_);
+		        "\t{\n", stack->data_);
 	    for (size_t i = 0; i < stack->size_; i++) {
 		    fprintf(stream, "\t* [%zu] %lg\n", i, stack->data_[i]);
 	    }
 	    for (size_t i = stack->size_; i < stack->capacity_; i++) {
-			    fprintf(stream, "\t  [%zu] %lg  POISON!\n", i, stack->data_[i]);
+	            fprintf(stream, "\t  [%zu] %lg  POISON!\n", i, stack->data_[i]);
 	    }
     }
-	fprintf(stream, "\t}\n" 
-                    "}\n");
+    fprintf(stream, "\t}\n" 
+		    "}\n");
     return Error;
 }
 
