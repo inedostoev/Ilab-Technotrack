@@ -125,16 +125,16 @@ StackErrors StackDump(const Stack *stack, FILE* stream, char* Stack_name) {
     } 
     else {
         fprintf(stream, "\tdata_[%p]\n"
-		        "\t{\n", stack->data_);
+                        "\t{\n", stack->data_);
 	    for (size_t i = 0; i < stack->size_; i++) {
 		    fprintf(stream, "\t* [%zu] %lg\n", i, stack->data_[i]);
 	    }
 	    for (size_t i = stack->size_; i < stack->capacity_; i++) {
-	            fprintf(stream, "\t  [%zu] %lg  POISON!\n", i, stack->data_[i]);
+            fprintf(stream, "\t  [%zu] %lg  POISON!\n", i, stack->data_[i]);
 	    }
     }
     fprintf(stream, "\t}\n" 
-		    "}\n");
+                    "}\n");
     return Error;
 }
 
