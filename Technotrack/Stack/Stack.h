@@ -23,8 +23,8 @@ enum StackErrors {
 
 typedef struct Stack {
     int         leftCanary_;
-    size_t	    capacity_;
-    size_t	    size_;   
+    size_t      capacity_;
+    size_t      size_;   
     StackData_t *data_;
     int         rightCanary_;
 }Stack;
