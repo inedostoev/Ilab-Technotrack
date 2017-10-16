@@ -15,6 +15,10 @@
 
 struct Stack *StackCtor(size_t cap) {
     Stack *stack = (Stack*)calloc(1, sizeof(Stack));
+    if(stack == NULL) {
+        printf("Stack pointer = NULL\n");
+        exit(STACK_NULL_PTR);
+    }
     stack->leftCanary_ = leftCanary;
     stack->capacity_ = cap;
     stack->size_ = 0;

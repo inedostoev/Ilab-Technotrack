@@ -2,7 +2,7 @@ Stack 's' (Ok)
 {
 	capacity_ = 13
 	size_ = 7
-	data_[0x1ccd040]
+	data_[0x60b00000af90]
 	{
 	* [0] 10
 	* [1] 11
@@ -23,7 +23,7 @@ Stack 's' (Ok)
 {
 	capacity_ = 13
 	size_ = 6
-	data_[0x1ccd040]
+	data_[0x60b00000af90]
 	{
 	* [0] 10
 	* [1] 11
@@ -44,7 +44,7 @@ Stack 's' (Ok)
 {
 	capacity_ = 13
 	size_ = 0
-	data_[0x1ccd040]
+	data_[0x60b00000af90]
 	{
 	  [0] -666  POISON!
 	  [1] -666  POISON!
