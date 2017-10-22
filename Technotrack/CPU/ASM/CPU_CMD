@@ -1,0 +1,49 @@
+#ifdef CPUCMDS
+
+CPUCMD(NOP,		0,		{})
+
+CPUCMD(MOV,		2,		{}) 
+
+CPUCMD(ADDS,	0,		{})
+
+CPUCMD(SUBS,	0,		{})
+
+CPUCMD(MULS,	0,		{})
+
+CPUCMD(DIVS,	0,      {})	               
+
+CPUCMD(ADD,		2,		{})
+
+CPUCMD(SUB,		2,		{})
+
+CPUCMD(MUL,		2,		{})
+
+CPUCMD(DIV,		2,		{})	
+
+CPUCMD(IN,		0,	    {})
+
+CPUCMD(OUT,		0,		{})
+
+CPUCMD(PUSH,	1,	    {})
+
+CPUCMD(POP,		1,		{})	
+
+CPUCMD(HLT,		0,		{})
+
+CPUCMD(JA,		3,		{})
+
+CPUCMD(JAE,		3,		{})
+
+CPUCMD(JB,		3,	    {})
+
+CPUCMD(JBE,		3,		{})
+
+CPUCMD(JE,		3,		{}) 
+
+CPUCMD(JNE,		3,		{}) 
+
+CPUCMD(CALL,    1,      {})
+
+CPUCMD(RET,     0,      {})
+
+#endif
