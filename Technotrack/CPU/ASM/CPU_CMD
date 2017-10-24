@@ -2,48 +2,97 @@
 
 CPUCMD(NOP,		0,		{})
 
-CPUCMD(MOV,		2,		{}) 
+CPUCMD(MOV,		2,		if(cpu->masRegOrNum[0] == 1) 
+                            firstArg = cpu->registers[int(cpu->masArgs[0])];
+                        else firstArg = int(cpu->masArgs[0]);
+                        assert(cpu->masRegOrNum[1] == 1);
+                        cpu->registers[int(cpu->masArgs[1])] = firstArg;) 
 
-CPUCMD(ADDS,	0,		{})
+CPUCMD(ADDS,	0,		firstArg = StackPop(cpu->stack) + StackPop(cpu->stack);
+                            StackPush(cpu->stack, firstArg);)
 
-CPUCMD(SUBS,	0,		{})
+CPUCMD(SUBS,	0,		firstArg = StackPop(cpu->stack);
+                        secondArg = StackPop(cpu->stack);
+                        StackPush(cpu->stack, firstArg - secondArg);)
 
-CPUCMD(MULS,	0,		{})
+CPUCMD(MULS,	0,		firstArg = StackPop(cpu->stack) * StackPop(cpu->stack);
+                        StackPush(cpu->stack, firstArg);)
 
-CPUCMD(DIVS,	0,      {})	               
+CPUCMD(DIVS,	0,      firstArg = StackPop(cpu->stack);
+                        secondArg = StackPop(cpu->stack);
+                        assert(secondArg != 0);
+                        StackPush(cpu->stack, firstArg / secondArg);)
 
-CPUCMD(ADD,		2,		{})
+#define ARITH_OPER(oper);                               \
+assert(cpu->masRegOrNum[0] == 1);                       \
+firstArg = cpu->registers[int(cpu->masArgs[0])];        \
+if(cpu->masRegOrNum[1] == 1)                            \
+    secondArg = cpu->registers[int(cpu->masArgs[1])];   \
+else secondArg = cpu->masArgs[1];                       \
+firstArg = firstArg oper secondArg;                     \
+cpu->registers[int(cpu->masArgs[0])] = firstArg;                   
 
-CPUCMD(SUB,		2,		{})
 
-CPUCMD(MUL,		2,		{})
 
-CPUCMD(DIV,		2,		{})	
+CPUCMD(ADD,		2,		ARITH_OPER(+))
 
-CPUCMD(IN,		0,	    {})
+CPUCMD(SUB,		2,		ARITH_OPER(-))
 
-CPUCMD(OUT,		0,		{})
+CPUCMD(MUL,		2,		ARITH_OPER(*))
 
-CPUCMD(PUSH,	1,	    {})
+CPUCMD(DIV,		2,		ARITH_OPER(/))	
 
-CPUCMD(POP,		1,		{})	
+CPUCMD(IN,		0,	    {printf("#Print number\n");
+                        int count = scanf("%9lg", &firstArg);
+                        assert(count > 0);
+                        StackPush(cpu->stack, firstArg);})
 
-CPUCMD(HLT,		0,		{})
+CPUCMD(OUT,		0,		printf("%lg\n", StackPop(cpu->stack));)
 
-CPUCMD(JA,		3,		{})
+CPUCMD(HLT,     0,      exit(0);)
 
-CPUCMD(JAE,		3,		{})
+CPUCMD(PUSH,	1,	    if(cpu->masRegOrNum[0] == 1) 
+                            firstArg = cpu->registers[int(cpu->masArgs[0])];
+                        else firstArg = cpu->masArgs[0];
+                        StackPush(cpu->stack, firstArg);)
 
-CPUCMD(JB,		3,	    {})
+CPUCMD(POP,		1,		assert(cpu->masRegOrNum[0] == 1);
+                        cpu->registers[int(cpu->masArgs[0])] = StackPop(cpu->stack);)	
 
-CPUCMD(JBE,		3,		{})
+CPUCMD(JMP,     1,      firstArg = int(cpu->masArgs[0]);
+                        moveIp(firstArg, slider, buffer, ip);)
 
-CPUCMD(JE,		3,		{}) 
+#define IFJMP(condition)                                \
+if(cpu->masRegOrNum[0] == 1)                            \
+    firstArg = cpu->registers[int(cpu->masArgs[0])];    \
+else firstArg = cpu->masArgs[0];                        \
+if(cpu->masRegOrNum[1] == 1)                            \
+    secondArg = cpu->registers[int(cpu->masArgs[1])];   \
+else secondArg = cpu->masArgs[1];                       \
+if(firstArg condition secondArg) {                      \
+    firstArg = int(cpu->masArgs[2]);                    \
+    moveIp(firstArg, slider, buffer, ip);               \
+}
 
-CPUCMD(JNE,		3,		{}) 
+CPUCMD(JA,		3,		IFJMP(>))
 
-CPUCMD(CALL,    1,      {})
+CPUCMD(JAE,		3,		IFJMP(>=))
 
-CPUCMD(RET,     0,      {})
+CPUCMD(JB,		3,	    IFJMP(<))
+
+CPUCMD(JBE,		3,		IFJMP(<=))
+
+CPUCMD(JE,		3,		IFJMP(==)) 
+
+CPUCMD(JNE,		3,		IFJMP(!=)) 
+
+CPUCMD(CALL,    1,      firstArg = *ip;
+                        StackPush(cpu->callStack, firstArg);
+                        secondArg = cpu->masArgs[0];
+                        moveIp(secondArg, slider, buffer, ip);)
+
+CPUCMD(RET,     0,      firstArg = StackPop(cpu->callStack);
+                        moveIp(firstArg, slider, buffer, ip);)
+
 
 #endif

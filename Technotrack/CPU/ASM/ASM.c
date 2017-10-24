@@ -14,9 +14,9 @@ enum ASM_CMDS {
 };
 
 enum CONFIG {
-	MAX_CMD_SIZE	= 6,
-	MAX_ARG_SIZE    = 6,
-	LABELS_QT       = 8
+	MAX_CMD_SIZE	    = 6,
+	MAX_ARG_SIZE        = 6,
+	LABELS_QT           = 8
 };
 
 enum ASM_ERRORS {
@@ -24,14 +24,14 @@ enum ASM_ERRORS {
     ASM_PRE_ASM_ERROR   = -2
 };
 
-int assembling(FILE *asmFile, FILE *binFile);
-int checkFiles(const FILE *asmFile, const FILE *binFile);
-size_t getFileSize(FILE *asmFile);
-int preAssembling(char *asmBuffer, int *labelAddress, size_t *qtCmd);
-char* fromFileToBuf(FILE *asmFile);
-ASM_CMDS getCmdNum(char *asmBuffer);
-int gerArgs(ASM_CMDS cmdCode, char **asmBuffer, FILE *binFile, int *labelAddress);
-int getCmdArgQt(ASM_CMDS CmdCode);
+int         assembling(FILE *asmFile, FILE *binFile);
+int         checkFiles(const FILE *asmFile, const FILE *binFile);
+size_t      getFileSize(FILE *asmFile);
+int         preAssembling(char *asmBuffer, int *labelAddress, size_t *qtCmd);
+char*       fromFileToBuf(FILE *asmFile);
+ASM_CMDS    getCmdNum(char *asmBuffer);
+int         getArgs(ASM_CMDS cmdCode, char **asmBuffer, FILE *binFile, int *labelAddress);
+int         getCmdArgQt(ASM_CMDS CmdCode);
 
 int assembling(FILE *asmFile, FILE *binFile) {
     if(checkFiles(asmFile, binFile)) {
@@ -53,12 +53,12 @@ int assembling(FILE *asmFile, FILE *binFile) {
     assert(scannedStr != NULL);
     for(size_t i = 0; i < qtCmd; i++) {
         assert(MAX_CMD_SIZE == 6);
-        sscanf(slider, "%5[A-Z0-9] %n", scannedStr, &cmdLength);
+        sscanf(slider, "%5[A-Z0-9] %n", scannedStr, &cmdLength);//nscanf
         slider += cmdLength;
         ASM_CMDS cmdCode = getCmdNum(scannedStr);
         assert(cmdCode != ASM_DEFAULT);
         fprintf(binFile, "%d ", cmdCode);
-        int result = gerArgs(cmdCode, &slider, binFile, labelAddress);
+        int result = getArgs(cmdCode, &slider, binFile, labelAddress);
     }
     free(scannedStr);
     free(asmBuffer);
@@ -98,26 +98,45 @@ size_t getFileSize(FILE* asmFile) {
     return fileSize;
 }
 
+//strtol
+
 int preAssembling(char *asmBuffer, int *labelAddress, size_t *qtCmd) {
-    int label = 0;
-    char* tmpPtr = NULL;
-    size_t fileSize = strlen(asmBuffer);
-    for(size_t i = 0; i < fileSize; i++) {
-        if(asmBuffer[i] == '\n') {
-            (*qtCmd)++;
-        }
-        if(asmBuffer[i] == ':') {
-            label = asmBuffer[i + 1] - '0';
-            assert(LABELS_QT < 10 && label < LABELS_QT && labelAddress[label] == -1);
-            labelAddress[label] = *qtCmd;
-            for(tmpPtr = asmBuffer + i; tmpPtr < strchr(tmpPtr, '\n'); tmpPtr++) {
+    for(int i = 0; i < strlen(asmBuffer); i++) {
+        if(asmBuffer[i] == ';') {
+            for(char *tmpPtr = asmBuffer + i; tmpPtr < strchr(tmpPtr, '\n'); tmpPtr++) {
                 *tmpPtr = ' ';
             }
-            *tmpPtr = ' ';
         }
-
-        //комменты и пропуск пробелов
     }
+    char *scannedStr = (char*)calloc(MAX_CMD_SIZE, sizeof(char));
+    assert(scannedStr != NULL);
+    int cmdLength = 0;
+    char *tmpPtr = asmBuffer;
+    while (tmpPtr < asmBuffer + strlen(asmBuffer) - 1) {
+        sscanf(tmpPtr, "%5[A-Z0-9$%.-:] %n", scannedStr, &cmdLength);
+        tmpPtr += cmdLength;
+        ASM_CMDS cmdCode = getCmdNum(scannedStr);
+        if(scannedStr[0] == ':' && cmdCode == ASM_DEFAULT) {
+            int label = scannedStr[1] - '0';
+            assert(LABELS_QT < 9 && label < LABELS_QT && labelAddress[label] == -1);
+            labelAddress[label] = *qtCmd;
+        }
+        else (*qtCmd)++;
+        int argQt = getCmdArgQt(cmdCode);
+        if(argQt != -1) {
+		    for (int i = 0; i < argQt; i++) {
+			    sscanf(tmpPtr, "%5[0-9%$.-] %n", scannedStr, &cmdLength);
+			    tmpPtr += cmdLength;
+		    }
+        }
+	}
+    for(int i = 0; i < strlen(asmBuffer); i++) {
+        if(asmBuffer[i] == ':') {
+            asmBuffer[i] = ' ';
+            asmBuffer[i + 1] = ' '; 
+        }
+    }
+    free(scannedStr);
     return 0;
 }
 
@@ -133,7 +152,7 @@ ASM_CMDS getCmdNum(char *scannedStr) {
 }
 
 
-int gerArgs(ASM_CMDS cmdCode, char **asmBuffer, FILE *binFile, int *labelAddress) {
+int getArgs(ASM_CMDS cmdCode, char **asmBuffer, FILE *binFile, int *labelAddress) {
     int argQt = getCmdArgQt(cmdCode);
     assert(argQt != -1);
     char* argValue = (char*)calloc(MAX_ARG_SIZE, sizeof(char));
@@ -171,5 +190,7 @@ int main() {
 	FILE* asmFile = fopen("asmFile", "rb");
 	FILE* binFile = fopen("binFile", "wb");
 	assembling(asmFile, binFile);
+    fclose(asmFile);
+    fclose(binFile);
     return 0;
 }
