@@ -17,13 +17,14 @@ typedef struct Node {
     Node*       next_;
 } Node;
 
-struct Node* NodeCtor(Node* parent, Data_t data);
-int ListDtor(Node* root);
-int NodeDtor(Node* node);
-int AddNode(Node* root, Data_t data);
-Node* DeleteNode(Node* root, Data_t data);
-int NodeDump(Node* root);
-int dotNodeDump(Node *root, FILE* stream);
-
+struct Node*    NodeCtor(Node* parent, Data_t data);
+int             ListDtor(Node* root);
+int             NodeDtor(Node* node);
+Node*           AddNode(Node* root, Data_t data);
+Node*           DeleteNodeOnAdress(Node* node);
+Node*           DeleteNode(Node* root, Data_t data);
+Node*           DeleteFirstNode(Node* root);
+int             NodeDump(Node* root);
+int             dotNodeDump(Node *root, FILE* stream);
 
 #endif

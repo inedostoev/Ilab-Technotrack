@@ -34,19 +34,41 @@ int NodeDtor(Node* node) {
     return 0;
 }
 
-int AddNode(Node* root, Data_t data) {
-    if(root->next_ != NULL) AddNode(root->next_, data);
-    else root->next_ = NodeCtor(root, data);
-    return 0;
+Node* AddNode(Node* root, Data_t data) {
+    Node* newNode = NULL;
+    if(root->next_ != NULL) 
+        newNode = AddNode(root->next_, data);
+    else {
+        root->next_ = NodeCtor(root, data);
+        newNode = root->next_;
+    }
+    return newNode;
+}
+
+Node* DeleteNodeOnAdress(Node* node) {
+    if(node == NULL) {
+        printf("Error: node = NULL\n");
+        return NULL;
+    }
+    else if(node->parent_ == NULL) 
+        return DeleteFirstNode(node);
+    else if(node->next_ == NULL) {
+        node->parent_->next_ = NULL;
+        NodeDtor(node);
+    }
+    else {
+        node->next_->parent_ = node->parent_;
+        node->parent_->next_ = node->next_;
+        NodeDtor(node);
+    }
+    return NULL;
 }
 
 Node* DeleteNode(Node* root, Data_t data) {
     if(root->data_ == data) {
         if(root->parent_ == NULL) {
-            root->next_->parent_ = NULL;
-            Node* newRoot = root->next_;
-            NodeDtor(root);
-            return newRoot;
+            Node* newNode = DeleteFirstNode(root);
+            return newNode;
         }
         else if(root->next_ == NULL) {
             root->parent_->next_ = NULL;
@@ -65,6 +87,13 @@ Node* DeleteNode(Node* root, Data_t data) {
         DeleteNode(root->next_, data);
     }
     return root;
+}
+
+Node* DeleteFirstNode(Node* root) {
+    root->next_->parent_ = NULL;
+    Node* newRoot = root->next_;
+    NodeDtor(root);
+    return newRoot;
 }
 
 int NodeDump(Node* root) {
@@ -99,5 +128,3 @@ int dotNodeDump(Node *root, FILE* stream) {
     dotNodeDump(root->next_, stream);
     return 0;
 }
-
-

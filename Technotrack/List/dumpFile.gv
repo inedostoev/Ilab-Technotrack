@@ -1,7 +1,7 @@
 digraph graf {
 treeNode_0x60300000efb0 [label="treeNode_[0x60300000efb0]\l{\l  parent_ [(nil)]\l  data_ = 2\l  next_ [0x60300000ef80]\l}\l"]
 treeNode_0x60300000efb0->treeNode_0x60300000ef80
-treeNode_0x60300000ef80 [label="treeNode_[0x60300000ef80]\l{\l  parent_ [0x60300000efb0]\l  data_ = 3\l  next_ [0x60300000ef50]\l}\l"]
-treeNode_0x60300000ef80->treeNode_0x60300000ef50
-treeNode_0x60300000ef50 [label="treeNode_[0x60300000ef50]\l{\l  parent_ [0x60300000ef80]\l  data_ = 4\l  next_ [(nil)]\l}\l"]
+treeNode_0x60300000ef80 [label="treeNode_[0x60300000ef80]\l{\l  parent_ [0x60300000efb0]\l  data_ = 3\l  next_ [0x60300000ef20]\l}\l"]
+treeNode_0x60300000ef80->treeNode_0x60300000ef20
+treeNode_0x60300000ef20 [label="treeNode_[0x60300000ef20]\l{\l  parent_ [0x60300000ef80]\l  data_ = 5\l  next_ [(nil)]\l}\l"]
 }
