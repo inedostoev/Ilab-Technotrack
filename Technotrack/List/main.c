@@ -7,13 +7,13 @@ int main() {
     List* list = ListCtor(root);
     
     Node* tmp = addLastNode(list, 2);
-    Node* t = addLastNode(list, 3);
+    addLastNode(list, 3);
     addFirstNode(list, 0);
     addNodeOnAdress(list, tmp, 2.5);
     
     NodeDump(list->firstNode_);
     
-    DeleteNodeOnAdress(list, t);
+    DeleteNodeOnAdress(list, tmp);
     NodeDump(list->firstNode_);
     
     ListDtor(list->firstNode_);
