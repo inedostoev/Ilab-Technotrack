@@ -1,6 +1,21 @@
 #include "Node.h"
 
 
+struct List* ListCtor(Node* firstNode) {
+    List* list = (List*)calloc(1, sizeof(List));
+    list->firstNode_ = firstNode;
+    list->lastNode_ = firstNode;
+    return list;
+}
+
+int DeleteList(List* list) {
+    if(list == NULL) return -1;
+    list->firstNode_ = NULL;
+    list->lastNode_ = NULL;
+    free(list);
+    return 0;
+}
+
 struct Node* NodeCtor(Node* parent, Data_t data) {
     Node* node = (Node*)calloc(1, sizeof(Node));
     if(node == NULL) {
@@ -19,7 +34,7 @@ int ListDtor(Node* root) {
     }
     root->data_ = -666;
     root->parent_ = NULL;
-    NodeDtor(root->next_);
+    ListDtor(root->next_);
     root->next_ = NULL;
     free(root);
     return 0;
@@ -34,64 +49,67 @@ int NodeDtor(Node* node) {
     return 0;
 }
 
-Node* AddNode(Node* root, Data_t data) {
-    Node* newNode = NULL;
-    if(root->next_ != NULL) 
-        newNode = AddNode(root->next_, data);
-    else {
-        root->next_ = NodeCtor(root, data);
-        newNode = root->next_;
-    }
+Node* addFirstNode(List* list, Data_t data) {
+    Node* newNode = NodeCtor(NULL, data);
+    newNode->next_ = list->firstNode_;
+    list->firstNode_->parent_ = newNode;
+    list->firstNode_ = newNode;
     return newNode;
 }
 
-Node* DeleteNodeOnAdress(Node* node) {
+Node* addLastNode(List* list, Data_t data) {
+    Node* newNode = NodeCtor(list->lastNode_, data);
+    newNode->parent_->next_ = newNode;
+    list->lastNode_ = newNode;
+    return newNode;
+}
+
+Node* addNodeOnAdress(List* list, Node* adress, Data_t data) {
+    if(adress == NULL) {
+        printf("Error: null adress send to addNodeOnAdress\n");
+        return NULL;
+    }
+    Node* root = list->firstNode_;
+    while(root != adress) {
+        if(root == NULL) {
+            printf("Can't find this adress\n");
+            return NULL;
+        }
+        root = root->next_;
+    }
+    Node *tmpPtr = root->next_;
+    root->next_ = NodeCtor(root, data);
+    root->next_->next_ = tmpPtr;
+    tmpPtr->parent_ = root;
+    return root->next_;
+}
+
+Node* DeleteNodeOnAdress(List* list, Node* node) {
     if(node == NULL) {
         printf("Error: node = NULL\n");
         return NULL;
     }
     else if(node->parent_ == NULL) 
-        return DeleteFirstNode(node);
+        return DeleteFirstNode(list);
     else if(node->next_ == NULL) {
+        list->lastNode_ = node->parent_;
         node->parent_->next_ = NULL;
         NodeDtor(node);
+        return NULL;
     }
     else {
         node->next_->parent_ = node->parent_;
         node->parent_->next_ = node->next_;
         NodeDtor(node);
+        return NULL;
     }
-    return NULL;
 }
 
-Node* DeleteNode(Node* root, Data_t data) {
-    if(root->data_ == data) {
-        if(root->parent_ == NULL) {
-            Node* newNode = DeleteFirstNode(root);
-            return newNode;
-        }
-        else if(root->next_ == NULL) {
-            root->parent_->next_ = NULL;
-        }
-        else {
-            root->next_->parent_ = root->parent_;
-            root->parent_->next_ = root->next_;
-        }
-        NodeDtor(root);
-    }
-    else if(root->next_ == NULL) {
-        printf("Can't find Node with data_ = %lg\n", data);
-        return root;
-    }
-    else {
-        DeleteNode(root->next_, data);
-    }
-    return root;
-}
-
-Node* DeleteFirstNode(Node* root) {
+Node* DeleteFirstNode(List* list) {
+    Node* root = list->firstNode_;
     root->next_->parent_ = NULL;
     Node* newRoot = root->next_;
+    list->firstNode_ = newRoot;
     NodeDtor(root);
     return newRoot;
 }

@@ -4,16 +4,20 @@
 
 int main() {
     Node* root = NodeCtor(NULL, 1);
-    AddNode(root, 2);
-    AddNode(root, 3);
-    Node* tmp = AddNode(root, 4);
-    AddNode(root, 5);
-    NodeDump(root);
-    root = DeleteNode(root, 1);
-    NodeDump(root);
-    DeleteNodeOnAdress(tmp);
-    NodeDump(root);
-    ListDtor(root);
+    List* list = ListCtor(root);
+    
+    Node* tmp = addLastNode(list, 2);
+    Node* t = addLastNode(list, 3);
+    addFirstNode(list, 0);
+    addNodeOnAdress(list, tmp, 2.5);
+    
+    NodeDump(list->firstNode_);
+    
+    DeleteNodeOnAdress(list, t);
+    NodeDump(list->firstNode_);
+    
+    ListDtor(list->firstNode_);
+    DeleteList(list);
     return 0;
 }
 
