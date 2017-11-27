@@ -7,6 +7,11 @@
 
 const int NODE_NULL_PTR = -1;
 
+enum dumpMod {
+    USER,
+    PROGER,
+};
+
 typedef struct Node {
     char*       data_;
     Node*       parent_;
@@ -17,7 +22,8 @@ typedef struct Node {
 struct Node*    NodeCtor(Node* parent, char* data);
 int             ListDtor(Node* root);
 Node*           AddNode(Node* root, char* data);
-int             NodeDump(Node* root);
+int             NodeDump(Node* root, dumpMod mode);
+int             dotUserDump(Node *root, FILE* stream);
 int             dotNodeDump(Node *root, FILE* stream);
 
 #endif

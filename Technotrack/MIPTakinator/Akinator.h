@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Node.h"
+#include "Tree.h"
 
 const int MAX_CMD_LENGTH = 4;
 const int MAX_QN_LENGTH = 128;
@@ -17,11 +18,11 @@ const int NO = 0;
 int callMenu();
 int scanfCmd();
 Node* akinatorCtor();
-Node* buildTree(char* buffer, size_t *counter, Node* Darth_Vader);
+//Node* buildTree(char* buffer, size_t *counter, Node* Darth_Vader);
 int findAnswer(Node* node, Node* root);
 int scanfAnswer();
 int addAnswer(Node* nodePointer, Node* root);
-int writeFile(FILE* outputFile, Node* nodePointer);
+//int writeFile(FILE* outputFile, Node* nodePointer);
 
 
 #endif

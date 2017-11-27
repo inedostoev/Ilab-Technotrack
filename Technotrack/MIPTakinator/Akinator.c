@@ -1,6 +1,5 @@
 #include "Akinator.h"
 
-
 int callMenu() {
     printf("Играть в игру [p]\n"
             "Dump [l]\n"
@@ -22,7 +21,7 @@ int scanfCmd() {
         findAnswer(root, root);
     }
     else if(!strcasecmp(scanfCmd, "l")) {
-        NodeDump(root);
+        NodeDump(root, USER);
     }
     else if(!strcasecmp(scanfCmd, "q")) {
         exit(1);
@@ -54,6 +53,7 @@ Node* akinatorCtor() {
     return Tree;
 }
 
+/*
 Node* buildTree(char* buffer, size_t *counter, Node* Darth_Vader) {
     if(buffer[*counter + 1] == ')') {
         *counter += 2;
@@ -73,6 +73,7 @@ Node* buildTree(char* buffer, size_t *counter, Node* Darth_Vader) {
     (*counter)++;
     return Luke;
 }
+*/
 
 int findAnswer(Node* node, Node* root) {
     if(node == NULL) return 1;
@@ -137,6 +138,7 @@ int addAnswer(Node* nodePointer, Node* root) {
     return 0;
 }
 
+/*
 int writeFile(FILE *outputFile, Node *nodePointer) {
 	if (nodePointer == NULL) {
 		fprintf(outputFile, "()");
@@ -149,4 +151,4 @@ int writeFile(FILE *outputFile, Node *nodePointer) {
 	fprintf(outputFile, ")");
     return 0;
 }
-
+*/

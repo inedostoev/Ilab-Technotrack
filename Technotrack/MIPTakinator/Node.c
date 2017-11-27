@@ -29,7 +29,7 @@ int ListDtor(Node* root) {
     return 0;
 }
 
-int NodeDump(Node* root) {
+int NodeDump(Node* root, dumpMod mode) {
     FILE* ptrFile = fopen("dumpFile.gv", "w");
     if (ptrFile == NULL) {
         printf("Error with dumpFile.gv\n");
@@ -37,7 +37,8 @@ int NodeDump(Node* root) {
     }
     fprintf(ptrFile, "digraph graf {\n");
     
-    dotNodeDump(root, ptrFile);
+    if(mode == USER) dotUserDump(root, ptrFile);
+    else dotNodeDump(root, ptrFile);
     
     fprintf(ptrFile, "}");
     fclose(ptrFile);
@@ -45,26 +46,22 @@ int NodeDump(Node* root) {
     system("xdot dumpFile.gv");
     return 0;
 }
-/*
-int dotNodeDump(Node *root, FILE* stream) {
-    fprintf(stream, "treeNode_%p [label=\""
-                    "treeNode_[%p]\\l",
-                    root, root);
-    fprintf(stream, "{\\l");
-    fprintf(stream, "  parent_ [%p]\\l", root->parent_);
-    fprintf(stream, "  data_ = %s\\l", root->data_);
-    fprintf(stream, "  left_ [%p]\\l", root->left_);
-    fprintf(stream, "}\\l");
-    fprintf(stream, "\"]\n");
-    if(root->left_ == NULL) return 0;
-    fprintf(stream, "treeNode_%p->treeNode_%p\n", root, root->left_);
-    if(root->right_ == NULL) return 0;
-    fprintf(stream, "treeNode_%p->treeNode_%p\n", root, root->right_);
-    dotNodeDump(root->left_, stream);
-    dotNodeDump(root->right_, stream);
+
+int dotUserDump(Node *root, FILE* stream) {
+    fprintf(stream, "treeNode_%p [label=\"", root);
+    fprintf(stream, "%s\\l", root->data_);
+    fprintf(stream, "\\l"
+                    "\"]\n");
+    if(root->left_) {
+        fprintf(stream, "treeNode_%p->treeNode_%p\n", root, root->left_);
+        dotUserDump(root->left_, stream);
+    }
+    if(root->right_) {
+        fprintf(stream, "treeNode_%p->treeNode_%p\n", root, root->right_);
+        dotUserDump(root->right_, stream);
+    }
     return 0;
 }
-*/
 
 int dotNodeDump(Node *root, FILE* stream) {
     fprintf(stream, "treeNode_%p [label=\""
