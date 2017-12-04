@@ -1,0 +1,47 @@
+digraph graf {
+treeNode_0x60300000ece0 [label="treeNode_[0x60300000ece0]\l{\l  parent_ [(nil)]\l  type_ = OPER\l  data_ = *\l  left_ [0x60300000ecb0]\l  right_ [0x60300000eb00]\l}\l"]
+treeNode_0x60300000ece0->treeNode_0x60300000ecb0
+treeNode_0x60300000ecb0 [label="treeNode_[0x60300000ecb0]\l{\l  parent_ [0x60300000ece0]\l  type_ = OPER\l  data_ = /\l  left_ [0x60300000ec80]\l  right_ [0x60300000ec50]\l}\l"]
+treeNode_0x60300000ecb0->treeNode_0x60300000ec80
+treeNode_0x60300000ec80 [label="treeNode_[0x60300000ec80]\l{\l  parent_ [0x60300000ecb0]\l  type_ = NUM\l  data_ = 1\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000ecb0->treeNode_0x60300000ec50
+treeNode_0x60300000ec50 [label="treeNode_[0x60300000ec50]\l{\l  parent_ [0x60300000ecb0]\l  type_ = OPER\l  data_ = /\l  left_ [0x60300000ec20]\l  right_ [0x60300000ebf0]\l}\l"]
+treeNode_0x60300000ec50->treeNode_0x60300000ec20
+treeNode_0x60300000ec20 [label="treeNode_[0x60300000ec20]\l{\l  parent_ [0x60300000ec50]\l  type_ = NUM\l  data_ = 1\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000ec50->treeNode_0x60300000ebf0
+treeNode_0x60300000ebf0 [label="treeNode_[0x60300000ebf0]\l{\l  parent_ [0x60300000ec50]\l  type_ = OPER\l  data_ = +\l  left_ [0x60300000ebc0]\l  right_ [0x60300000eb30]\l}\l"]
+treeNode_0x60300000ebf0->treeNode_0x60300000ebc0
+treeNode_0x60300000ebc0 [label="treeNode_[0x60300000ebc0]\l{\l  parent_ [0x60300000ebf0]\l  type_ = OPER\l  data_ = ^\l  left_ [0x60300000eb90]\l  right_ [0x60300000eb60]\l}\l"]
+treeNode_0x60300000ebc0->treeNode_0x60300000eb90
+treeNode_0x60300000eb90 [label="treeNode_[0x60300000eb90]\l{\l  parent_ [0x60300000ebc0]\l  type_ = VAR\l  data_ = x\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000ebc0->treeNode_0x60300000eb60
+treeNode_0x60300000eb60 [label="treeNode_[0x60300000eb60]\l{\l  parent_ [0x60300000ebc0]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000ebf0->treeNode_0x60300000eb30
+treeNode_0x60300000eb30 [label="treeNode_[0x60300000eb30]\l{\l  parent_ [0x60300000ebf0]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000ece0->treeNode_0x60300000eb00
+treeNode_0x60300000eb00 [label="treeNode_[0x60300000eb00]\l{\l  parent_ [0x60300000ece0]\l  type_ = OPER\l  data_ = /\l  left_ [0x60300000e410]\l  right_ [0x60300000e740]\l}\l"]
+treeNode_0x60300000eb00->treeNode_0x60300000e410
+treeNode_0x60300000e410 [label="treeNode_[0x60300000e410]\l{\l  parent_ [0x60300000eb00]\l  type_ = OPER\l  data_ = *\l  left_ [0x60300000e3e0]\l  right_ [0x60300000dfc0]\l}\l"]
+treeNode_0x60300000e410->treeNode_0x60300000e3e0
+treeNode_0x60300000e3e0 [label="treeNode_[0x60300000e3e0]\l{\l  parent_ [0x60300000e410]\l  type_ = NUM\l  data_ = -1\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000e410->treeNode_0x60300000dfc0
+treeNode_0x60300000dfc0 [label="treeNode_[0x60300000dfc0]\l{\l  parent_ [0x60300000e410]\l  type_ = OPER\l  data_ = *\l  left_ [0x60300000df90]\l  right_ [0x60300000df60]\l}\l"]
+treeNode_0x60300000dfc0->treeNode_0x60300000df90
+treeNode_0x60300000df90 [label="treeNode_[0x60300000df90]\l{\l  parent_ [0x60300000dfc0]\l  type_ = VAR\l  data_ = x\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000dfc0->treeNode_0x60300000df60
+treeNode_0x60300000df60 [label="treeNode_[0x60300000df60]\l{\l  parent_ [0x60300000dfc0]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000eb00->treeNode_0x60300000e740
+treeNode_0x60300000e740 [label="treeNode_[0x60300000e740]\l{\l  parent_ [0x60300000eb00]\l  type_ = OPER\l  data_ = ^\l  left_ [0x60300000e710]\l  right_ [0x60300000e620]\l}\l"]
+treeNode_0x60300000e740->treeNode_0x60300000e710
+treeNode_0x60300000e710 [label="treeNode_[0x60300000e710]\l{\l  parent_ [0x60300000e740]\l  type_ = OPER\l  data_ = +\l  left_ [0x60300000e6e0]\l  right_ [0x60300000e650]\l}\l"]
+treeNode_0x60300000e710->treeNode_0x60300000e6e0
+treeNode_0x60300000e6e0 [label="treeNode_[0x60300000e6e0]\l{\l  parent_ [0x60300000e710]\l  type_ = OPER\l  data_ = ^\l  left_ [0x60300000e6b0]\l  right_ [0x60300000e680]\l}\l"]
+treeNode_0x60300000e6e0->treeNode_0x60300000e6b0
+treeNode_0x60300000e6b0 [label="treeNode_[0x60300000e6b0]\l{\l  parent_ [0x60300000e6e0]\l  type_ = VAR\l  data_ = x\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000e6e0->treeNode_0x60300000e680
+treeNode_0x60300000e680 [label="treeNode_[0x60300000e680]\l{\l  parent_ [0x60300000e6e0]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000e710->treeNode_0x60300000e650
+treeNode_0x60300000e650 [label="treeNode_[0x60300000e650]\l{\l  parent_ [0x60300000e710]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+treeNode_0x60300000e740->treeNode_0x60300000e620
+treeNode_0x60300000e620 [label="treeNode_[0x60300000e620]\l{\l  parent_ [0x60300000e740]\l  type_ = NUM\l  data_ = 2\l  left_ [(nil)]\l  right_ [(nil)]\l}\l"]
+}
